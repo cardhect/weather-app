@@ -8,7 +8,51 @@
     <title>Document</title>
 </head>
 <body>
+    
+    <div class="weather-container">
+        <div class="location-unit-container">
+            <h3 class="location">GifCast HQ</h3>
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
 
+        <div class="location-gif">
+            <img src="sunny.jpg" alt="">
+        </div>
+        <div class="weather-data">
+            <div class="temp-wind">
+                <div class="flex-space-apart">
+                    <h4>Temperature:</h4>
+                    <p class="temp"></p>
+                </div>
+                <div class="flex-space-apart">
+                    <h4>Wind Speed:</h4>
+                    <p class="wind"></p>
+                </div>
+            </div>
+            <div class="condition-desc">
+                <div class="flex-space-apart">
+                    <h4>Conditions:</h4>
+                    <p class="weather-main"></p>
+                </div>
+                <div class="flex-space-apart">
+                    <h4>Details:</h4>
+                    <p class="weather-desc"></p>
+                </div>
+            </div>
+        </div>
+<!-- //TODO Change this into a form... if you need too. look into this  -->
+
+</div>
+<div class="location-form">
+    <label for="">Enter a location for the current weather!</label>
+    <div>
+        <input class="user-location" type="user-location">
+        <button class="location-btn">Enter</button>
+    </div>
+</div>
 
 
     

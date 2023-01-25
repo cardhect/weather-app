@@ -1,3 +1,155 @@
 body {
-    background-color: black;
+	background-color: #D6F6DD;
+	text-align: center;
+}
+img {
+    height: 200px;
+    width: 275px;
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+    border: 2px solid #61E294;
+    border-bottom: 0;
+}
+h4 {
+	font-family: monospace;
+}
+.location {
+	font-family: monospace;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.location-gif {
+	height: 200px;
+}
+.location-unit-container {
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+	margin-bottom: 7px;
+}
+
+.weather-container {
+	display: inline-block;
+    padding: 10px;
+    border-radius: 10px;
+	border: 2px solid #36393B;
+    background-color: #4BB3FD;
+	
+}
+.weather-data {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	font-family: monospace;
+}
+
+.temp-container {
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+}
+
+.location-form {
+	color: #36393B;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.temp-wind,
+.condition-desc {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	border: 1px solid #61E294;
+	border-bottom: 2px solid #61E294;
+	border-top: 2px solid #61E294;
+	  
+}
+.temp-wind{
+	border-left: 2px solid #61E294;
+	border-radius: 0px 0px 0px 10px;
+}
+.condition-desc{
+	border-right: 2px solid #61E294;
+	border-radius: 0px 0px 10px 0px;
+	
+}
+
+/* The switch - the box around the slider */
+.switch {
+	position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 15px;
+	color: #36393B;
+	font-family: monospace;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #DEC5E3;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+
+}
+
+.slider:before {
+    position: absolute;
+    content: "°F";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 1px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    line-height: 15px;
+    font-size: 10px;
+    font-family: arial;
+}
+.slider.special:before {
+    content: "°C";
+}
+
+input:checked + .slider {
+	background-color: #DEC5E3;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #DEC5E3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
 }
