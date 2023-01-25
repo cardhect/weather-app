@@ -6,21 +6,23 @@ let weatherData;
 async function pingWeatherAPI(location) {
 	//Currently has no error handling
 	//you await for fetch to return promise
-	const pingedAPI = await fetch(
-		`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=`,
-		{ mode: "cors" }
-	);
-
-	//you await for fetches await then return it in JSON
-	const pingedJson = await pingedAPI.json();
-	console.log(pingedJson);
-	return pingedJson;
-}
-async function pingGiphyAPI(name) {
-	const img = document.querySelector("img");
 	try {
 		const pingedAPI = await fetch(
-			`https://api.giphy.com/v1/gifs/translate?api_key=apikey=${name}`,
+			`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=4bafc932737438bd5c4374705e53ff02`,
+			{ mode: "cors" }
+		);
+		//you await for fetches await then return it in JSON
+		const pingedJson = await pingedAPI.json();
+		console.log(pingedJson);
+		return pingedJson;
+	} catch (error) {
+		console.log("pingWeatherApi() had an error: " + error);
+	}
+}
+async function pingGiphyAPI(name) {
+	try {
+		const pingedAPI = await fetch(
+			`https://api.giphy.com/v1/gifs/translate?api_key=r7mfBfG99hbJARiuOEL737ODm4Vq45Kq&s=${name}`,
 			{ mode: "cors" }
 		);
 
@@ -28,9 +30,8 @@ async function pingGiphyAPI(name) {
 		console.log(pingedJSON);
 		return pingedJSON;
 	} catch (error) {
-		console.log("Gif Error: " + error);
+		console.log("pingGiphyApi() had an Error: " + error);
 	}
-	// img.src = ''
 }
 
 //This function waits for for the api to be pinged. It continues with the try condition if it resolved or goes through the catch if there was an error.
@@ -76,7 +77,6 @@ async function proccessAPIData(pingedWeatherAPI) {
 
 		//Gif Proccessing
 		const pingGiphy = await pingGiphyAPI(weatherType);
-
 		const giphyImgUrl = await pingGiphy.data.images.original.url;
 
 		//returned Data
@@ -101,38 +101,35 @@ async function proccessAPIData(pingedWeatherAPI) {
 //     })
 // }
 
-function populateElements(proccessedData) {
+async function populateElements(proccessedData) {
 	const locationHeader = document.querySelector(".location");
 	const tempEle = document.querySelector(".temp");
 	const windEle = document.querySelector(".wind");
 	const weatherCondition = document.querySelector(".weather-main");
 	const weatherDesc = document.querySelector(".weather-desc");
-	const img = document.querySelector("img");
+	const img = document.querySelector(".weather-img");
+	console.log(proccessedData);
 
-	proccessedData.then(function (proccessAPIDataArray) {
-		console.log(proccessAPIDataArray);
-		//Weather Data population
-		const weatherData = proccessAPIDataArray[0];
+	const apiData = await proccessedData;
+	const weatherData = await apiData[0];
 
-		locationHeader.innerText = weatherData[0];
+	//Weather Data population
 
-		//Unit is in kelvin default should be F / ability to change to C
-		let tempature = returnUnit(weatherData[4]);
-		tempEle.innerText = Math.floor(tempature);
+	locationHeader.innerText = weatherData[0];
 
-		windEle.innerText = Math.floor(weatherData[3] * 2.37) + "MPH";
+	//Unit is in kelvin default should be F / ability to change to C
+	let tempature = returnUnit(weatherData[4]);
+	tempEle.innerText = Math.floor(tempature);
 
-		weatherCondition.innerText = weatherData[1];
+	windEle.innerText = Math.floor(weatherData[3] * 2.37) + "MPH";
 
-		weatherDesc.innerText = weatherData[2];
+	weatherCondition.innerText = weatherData[1];
 
-		//Giphy Data population
-		const giphyImgUrl = proccessAPIDataArray[1];
-		img.src = giphyImgUrl;
+	weatherDesc.innerText = weatherData[2];
 
-		let awaitLocationEle = document.querySelector('.location');
-		return awaitLocationEle;
-	});
+	//Giphy Data population
+	const giphyImgUrl = apiData[1];
+	img.src = giphyImgUrl;
 }
 function convertToCelsius(valNum) {
 	valNum = parseFloat(valNum);
@@ -181,10 +178,19 @@ unitSlider.addEventListener("click", () => {
 	}
 });
 
-function displayChange() {
-	
+async function defaultWeather() {
+	const locationEle = document.querySelector('.location');
+	const waitFetch = await populateElements(proccessAPIData(pingWeatherAPI("Kansas+City")));
+	locationEle.innerHTML = 'GifCast HQ';
 }
 
-const changeLocation = async () => {
-	const displayChanged = await displayChange(); 
+async function logoGif(){
+	const logoImg = document.querySelector('.logo-img');
+	const pingGiphy = await pingGiphyAPI('weather')
+	const giphyImgUrl = await pingGiphy.data.images.original.url;
+	logoImg.src = giphyImgUrl;
+
 }
+logoGif();
+
+defaultWeather();
